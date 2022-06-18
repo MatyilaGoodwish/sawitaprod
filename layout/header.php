@@ -32,27 +32,18 @@
  
  <script> 
     (function() {
-
         class GPS{
-            constructor() { 
-                
-            }
-            track() { 
-                navigator.geolocation.watchPosition((position) => {
-                    fetch(`tracking.php?lat=${position.coords.latitude}&long=${position.coords.longitude}&app=${navigator.appName}&ver=${navigator.appVersion}`)
-                      .then(function(response){
-                        return response.text()
-                      })
-                      .then(function(data){
-                        console.log(data)
-                      })
+            constructor() { }
+            trackCurrentUserLocation() { 
+                navigator.geolocation.watchPosition( async (position) => {
+                    let pos = await fetch(`tracking.php?lat=${position.coords.latitude}&long=${position.coords.longitude}&app=${navigator.appName}&ver=${navigator.appVersion}`)
+                    let text = await pos.text();
+                    console.log(text);
                 });
             }
         }
-
         const user = new GPS()
-
-        user.track()
+        user.trackCurrentUserLocation()
     }())
 
 </script>
@@ -80,7 +71,7 @@
           @description change URL to a secure SSL url
          */
         function changeUrlToLiveServer(url) {
-          location.replace(url)
+          location.replace(url);
         }
         if(!isSecured()){
             //Check if URL is devevelopment server
@@ -92,8 +83,7 @@
             }
         }
    }())
-      
-    
+     
   </script>
 
 </head>
